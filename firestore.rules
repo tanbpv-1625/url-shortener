@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // URLs collection
+    match /urls/{urlId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+    
+    // Clicks collection
+    match /clicks/{clickId} {
+      allow read: if true;
+      allow create: if true;
+      allow delete: if true;
+    }
+  }
+}
