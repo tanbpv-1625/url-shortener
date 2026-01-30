@@ -21,18 +21,6 @@ _Giao diện trang chủ cho phép người dùng nhập URL dài và tạo link
 
 _Dashboard hiển thị tổng quan về các links và thống kê click_
 
-### Biểu đồ Analytics
-
-![Analytics Charts](./docs/screenshots/analytics-charts.png)
-
-_Biểu đồ thống kê theo ngày, thiết bị, trình duyệt và nguồn truy cập_
-
-### Chi tiết Link
-
-![Link Detail](./docs/screenshots/link-detail.png)
-
-_Trang chi tiết hiển thị analytics cho từng link cụ thể_
-
 ### Trang chuyển hướng
 
 ![Redirect Page](./docs/screenshots/redirect.png)
@@ -365,7 +353,7 @@ MIT License - Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
 
 **Your Name**
 
-- GitHub: [@your-username](https://github.com/your-username)
+- GitHub: [@tanbpv-1625](https://github.com/tanbpv-1625)
 
 ---
 
