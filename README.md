@@ -13,11 +13,9 @@ A single-page application for shortening URLs and tracking click analytics, buil
 
 ## Screenshots
 
-| Home Page                                    | Dashboard                                    | Link Detail |
-| -------------------------------------------- | -------------------------------------------- | ----------- |
+| Home Page                                    | Dashboard                                    |
+| -------------------------------------------- | -------------------------------------------- |
 | ![Home Page](docs/screenshots/home-page.png) | ![Dashboard](docs/screenshots/dashboard.png) |
-
-> Add your screenshots to `docs/screenshots/` — recommended size: 1280×800px.
 
 ## Tech Stack
 
