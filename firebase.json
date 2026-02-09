@@ -1,0 +1,26 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/dashboard/**", "destination": "/index.html" },
+      { "source": "/not-found", "destination": "/index.html" },
+      { "source": "/link/**", "destination": "/index.html" },
+      {
+        "source": "/**",
+        "function": {
+          "functionId": "redirect",
+          "region": "us-central1"
+        }
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20"
+  }
+}
