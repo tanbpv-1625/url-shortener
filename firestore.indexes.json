@@ -1,0 +1,20 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "urls",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "clickCount", "order": "DESCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "clicks",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

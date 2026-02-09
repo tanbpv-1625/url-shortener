@@ -137,6 +137,7 @@ A user can see a list of all their created short URLs on the Shortener Page (bel
 - **FR-020**: System MUST communicate with the backend via REST API using the base URL from environment configuration.
 - **FR-021**: System MUST handle API errors gracefully with user-friendly error messages and retry options.
 - **FR-022**: System MUST show loading indicators during all API calls.
+- **FR-023**: System MUST integrate Google Analytics 4 (GA4) via Firebase Analytics to track page views and key user actions (URL creation, link copy, link deletion, dashboard/detail navigation).
 
 ### Key Entities
 
@@ -164,3 +165,4 @@ A user can see a list of all their created short URLs on the Shortener Page (bel
 - URL redirect logic (short URL → original URL) is handled by the backend; the frontend only handles the "Link not found" error page.
 - Analytics data retention period is managed by the backend; the frontend displays whatever data the API returns.
 - The application does not require offline support or PWA capabilities for the initial release.
+- Google Analytics 4 (GA4) is configured via Firebase project settings; the measurement ID is provided as `VITE_GA_MEASUREMENT_ID` environment variable.

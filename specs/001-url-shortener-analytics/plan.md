@@ -10,7 +10,7 @@ Build a 2-page React TypeScript SPA for URL shortening with click analytics. Pag
 ## Technical Context
 
 **Language/Version**: TypeScript 5+ (strict mode), Node.js 20 (Cloud Functions)  
-**Primary Dependencies**: React 18+, React Router v6, Tailwind CSS v3.4, Firebase SDK v10 (Firestore), Recharts, nanoid, date-fns, clsx + tailwind-merge  
+**Primary Dependencies**: React 18+, React Router v6, Tailwind CSS v3.4, Firebase SDK v10 (Firestore, Analytics), Recharts, nanoid, date-fns, clsx + tailwind-merge  
 **Storage**: Cloud Firestore — `urls` collection (doc ID = short code) + `clicks` subcollection per URL  
 **Testing**: Vitest + React Testing Library; Coverage target ≥ 80%  
 **Target Platform**: Web (SPA) — static deploy via Firebase Hosting; Cloud Function (Node.js 20) for redirect  
@@ -86,7 +86,8 @@ specs/001-url-shortener-analytics/
 │   ├── vite-env.d.ts
 │   │
 │   ├── lib/                          # Core utilities
-│   │   ├── firebase.ts               # Firebase initialization
+│   │   ├── firebase.ts               # Firebase + Analytics initialization
+│   │   ├── analytics.ts              # GA4 event tracking helpers
 │   │   └── utils.ts                  # cn() = clsx + tailwind-merge
 │   │
 │   ├── types/                        # TypeScript type definitions

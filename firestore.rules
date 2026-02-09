@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // URLs collection: allow read/write for all (no auth for MVP)
+    match /urls/{shortCode} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasAll(['shortCode', 'originalUrl', 'createdAt', 'clickCount'])
+                    && request.resource.data.originalUrl is string
+                    && request.resource.data.originalUrl.size() >= 1
+                    && request.resource.data.originalUrl.size() <= 2048
+                    && request.resource.data.shortCode is string
+                    && request.resource.data.shortCode.size() >= 6
+                    && request.resource.data.shortCode.size() <= 8
+                    && request.resource.data.clickCount == 0;
+      allow delete: if true;
+      // Only Cloud Function (admin SDK) updates clickCount — deny client updates
+      allow update: if false;
+
+      // Clicks subcollection: read-only from client, writes via Cloud Function (admin SDK)
+      match /clicks/{clickId} {
+        allow read: if true;
+        allow write: if false;
+      }
+    }
+  }
+}
