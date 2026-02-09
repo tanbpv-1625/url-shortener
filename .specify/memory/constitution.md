@@ -1,50 +1,116 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# URL Shortener Constitution
+
+## Project Overview
+
+A URL shortening service with click analytics. Users create Short URLs, and the system tracks click counts, traffic sources (referrer), and device types (mobile/tablet/desktop). Includes a dashboard with daily/weekly statistics and top links.
+
+### Key Features
+
+- **Create Short URL**: Input original URL → generate short code → return a copyable/shareable short link
+- **Redirect & Track**: Access short link → redirect to original URL while recording the click event
+- **Click Analytics**: Track total clicks, source (referrer), device type, and timestamp
+- **Dashboard**: Click statistics by day/week, trend charts, top links table
+- **Link Management**: View list of created short URLs, delete, and view per-link analytics details
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. React TypeScript SPA
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+The application is a **Single Page Application** built with **React 18+** and **TypeScript strict mode**; Client-side rendering — all UI logic runs in the browser; Deployed as static build output (Vite build → `dist/`); All backend interactions via REST API calls from the client; Strict TypeScript: `"strict": true`, no `any` usage except in exceptional cases with an explanatory comment.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Mobile-First & Responsive Design
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Design follows the **Mobile-First** principle — styles written for mobile first, using `min-width` media queries to scale up; Minimum 3 breakpoints supported: mobile (< 768px), tablet (768px–1024px), desktop (> 1024px); Dashboard layout transitions from single-column (mobile) to multi-column grid (desktop); All interactive elements MUST be touch-friendly (min target size 44px); Charts MUST be responsive, scaling automatically with their container.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Type Safety & Code Quality
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Every component, hook, and utility MUST have explicit **type definitions**; Interface/Type for API responses, request payloads, and component props are mandatory; No `as` type assertions unless absolutely necessary; Use discriminated unions for state management (loading/success/error); ESLint + Prettier are mandatory with a zero warnings policy.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Component Architecture
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Atomic Design pattern: atoms → molecules → organisms → pages; Each component in its own directory: `ComponentName/index.tsx`, `ComponentName.module.css`, `ComponentName.test.tsx`; Custom hooks for reusable logic (`useShortUrl`, `useAnalytics`, `useDashboard`); Separate presentation components (UI) from container components (logic/data fetching); Props interfaces MUST be exported for reuse.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Performance & Accessibility
+
+Target Lighthouse score ≥ 90 (Performance, Accessibility, Best Practices); Code splitting with `React.lazy()` + `Suspense` for routes; Reasonable memoization (`useMemo`, `useCallback`, `React.memo`) — do not over-optimize; WCAG 2.1 Level AA: semantic HTML, keyboard navigation, ARIA labels; Color contrast ratio ≥ 4.5:1; Chart components MUST provide alternative text/table views for screen readers.
+
+## Technology Stack & Constraints
+
+- **Framework**: React 18+ with TypeScript 5+
+- **Build Tool**: Vite (fast HMR, optimized production build)
+- **Styling**: CSS Modules (`.module.css`) + CSS Custom Properties for theming; Flexbox/Grid for layout
+- **Routing**: React Router v6+ (client-side routing)
+- **State Management**: React Context + `useReducer` for global state; `useState` for component-level
+- **Data Fetching**: Fetch API wrapper with TypeScript generics; Custom hooks (`useFetch<T>`)
+- **Charts**: Lightweight chart library (Recharts or Chart.js with react-chartjs-2)
+- **Date Handling**: date-fns (tree-shakeable) for day/week processing in analytics
+- **Testing**: Vitest + React Testing Library; Coverage target ≥ 80%
+- **Linting**: ESLint (typescript-eslint) + Prettier
+- **API Communication**: REST API via fetch wrapper; Base URL configured via `VITE_API_URL`
+- **Hosting**: Static hosting (Vercel, Netlify, or GitHub Pages) — serves `dist/` only
+- **Browser Support**: Latest 2 versions of Chrome, Firefox, Safari, Edge
+- **No server-side code** in this repo — frontend SPA only
+
+## Development Workflow
+
+- **Version Control**: Git with conventional commits (`feat:`, `fix:`, `chore:`, `docs:`)
+- **Branching**: `main` (production), `develop` (staging), feature branches (`feat/feature-name`)
+- **Code Review**: All changes to `main` MUST go through a Pull Request with at least 1 approval
+- **Testing**: `vitest run` MUST pass before merge; Manual responsive testing on mobile + desktop
+- **Type Check**: `tsc --noEmit` MUST pass — no type errors allowed
+- **Lint**: `eslint . --max-warnings 0` — zero warnings policy
+- **Deployment**: Auto deploy from `main` branch via CI/CD pipeline
+- **File Organization**:
+  ```
+  /
+  ├── index.html
+  ├── vite.config.ts
+  ├── tsconfig.json
+  ├── package.json
+  ├── src/
+  │   ├── main.tsx
+  │   ├── App.tsx
+  │   ├── vite-env.d.ts
+  │   ├── types/
+  │   │   ├── url.ts
+  │   │   ├── analytics.ts
+  │   │   └── api.ts
+  │   ├── api/
+  │   │   ├── client.ts
+  │   │   ├── urls.ts
+  │   │   └── analytics.ts
+  │   ├── hooks/
+  │   │   ├── useShortUrl.ts
+  │   │   ├── useAnalytics.ts
+  │   │   └── useDashboard.ts
+  │   ├── components/
+  │   │   ├── common/
+  │   │   ├── url/
+  │   │   ├── analytics/
+  │   │   └── dashboard/
+  │   ├── pages/
+  │   │   ├── HomePage.tsx
+  │   │   ├── DashboardPage.tsx
+  │   │   ├── LinkDetailPage.tsx
+  │   │   └── NotFoundPage.tsx
+  │   ├── context/
+  │   │   └── AppContext.tsx
+  │   ├── utils/
+  │   │   ├── format.ts
+  │   │   ├── clipboard.ts
+  │   │   └── device.ts
+  │   └── styles/
+  │       ├── global.css
+  │       └── variables.css
+  ├── public/
+  │   └── favicon.svg
+  └── README.md
+  ```
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the authoritative document guiding all technical decisions for the project. All changes to core principles MUST be documented and reviewed before adoption. When principles conflict, priority order is: Type Safety > Accessibility > Performance > Simplicity > Aesthetics. All PRs MUST pass: type check (`tsc --noEmit`), lint, and tests before merge. Code with unjustified `any` types MUST NOT be merged.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Amendment procedure: Propose changes via PR to this file → team review → merge to `main`. Versioning follows semantic versioning (MAJOR: significant principle changes, MINOR: new sections/expansions, PATCH: wording fixes).
+
+**Version**: 1.0.1 | **Ratified**: 2026-02-09 | **Last Amended**: 2026-02-09
